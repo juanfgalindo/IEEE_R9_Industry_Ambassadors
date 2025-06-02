@@ -15,6 +15,7 @@ import io
 COL_AMBASSADOR_NAME = 'Ambassador Name'
 COL_TYPE_OF_REPORT = 'Type of Report'
 COL_COFFEE_TALK_PARTICIPANTS = 'Number of Participants in this Session'
+COL_VALIDATED = 'Validated' # Make sure this matches your new column name
 
 TYPE_RECRUITED_MEMBER = "Recruited New IEEE Member(s)"
 TYPE_LOCAL_GROUP = "Local Group Formed"
@@ -120,6 +121,9 @@ else:
     elif COL_TYPE_OF_REPORT not in df.columns:
         print(f"CRITICAL ERROR: The column '{COL_TYPE_OF_REPORT}' was not found. Check the name in your file/sheet.")
         # exit()
+    elif COL_VALIDATED not in df.columns:
+        print(f"AVISO: The validation column '{COL_VALIDATED}' was not found. All entries will be counted.")
+        df[COL_VALIDATED] = 'TRUE' # Treat all as validated if column is missing
     else:
         if COL_COFFEE_TALK_PARTICIPANTS in df.columns:
             df[COL_COFFEE_TALK_PARTICIPANTS] = pd.to_numeric(df[COL_COFFEE_TALK_PARTICIPANTS], errors='coerce').fillna(0)
@@ -141,8 +145,12 @@ else:
         ]
         scores_df = pd.DataFrame(index=ambassadors_list, columns=scoring_columns).fillna(0)
 
+        df_validated = df[df[COL_VALIDATED].astype(str).str.upper() == 'TRUE'].copy()
+        print(f"\nCounting {len(df_validated)} validated entries out of {len(df)} total entries.")
+
         for ambassador in ambassadors_list:
-            df_ambassador = df[df[COL_AMBASSADOR_NAME] == ambassador]
+            # Use the df_validated for ambassador-specific calculations
+            df_ambassador = df_validated[df_validated[COL_AMBASSADOR_NAME] == ambassador]
 
             # 1. Recruited members score
 
