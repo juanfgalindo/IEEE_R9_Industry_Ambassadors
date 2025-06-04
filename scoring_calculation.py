@@ -7,10 +7,13 @@ Original file is located at
     https://colab.research.google.com/drive/1T65hNn-2n6gt1dpvThhIZ9L8RoHTL2lM
 """
 
+#Author: Juan Fernando Galindo Jaramillo. jgalindoj@ieee.org
+
 import pandas as pd
 import numpy as np
 from google.colab import files
 import io
+import matplotlib.pyplot as plt
 
 COL_AMBASSADOR_NAME = 'Ambassador Name'
 COL_TYPE_OF_REPORT = 'Type of Report'
@@ -218,3 +221,39 @@ else:
         # print(f"\nFile '{results_filename}' ready to download.")
 
         print("\n---Scoring process completed ---")
+
+         # NEW CODE BLOCK FOR VISUALIZATION STARTS HERE
+        print("\n--- VISUALIZING AMBASSADOR TOTAL SCORES ---")
+
+        # Dynamically adjust figure height based on number of ambassadors
+        # This prevents labels from overlapping for many ambassadors
+        num_ambassadors = len(scores_df)
+        # Ensure a minimum height for readability, then add space per ambassador
+        fig_height = max(6, num_ambassadors * 0.4)
+
+        plt.figure(figsize=(12, fig_height)) # Width 12 inches, dynamic height
+
+        # Plotting the horizontal bar chart, explicitly plotting only 'Total_Score'
+        # The 'y' parameter specifies which column to plot as the bar lengths [1]
+        ax = scores_df.plot.barh(y='Total_Score', color='#1f77b4') # A standard blue color [1]
+
+        # Customizing the plot for clarity
+        plt.title('Ambassador Total Score Standings', fontsize=16)
+        plt.xlabel('Total Points', fontsize=12)
+        plt.ylabel('Ambassador Name', fontsize=12)
+
+        # Invert y-axis to have the highest score at the top, consistent with leaderboard view
+        ax.invert_yaxis()
+
+        # Remove top and right spines for a cleaner look
+        ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible(False)
+
+        # Add a grid for easier reading of values on the x-axis
+        ax.grid(axis='x', linestyle='--', alpha=0.7)
+
+        plt.tight_layout() # Adjust layout to prevent labels from overlapping
+        plt.show() # Display the plot
+
+        print("\n--- Visualization completed ---")
+        # NEW CODE BLOCK FOR VISUALIZATION ENDS HERE
