@@ -220,9 +220,6 @@ else:
         # files.download(results_filename)
         # print(f"\nFile '{results_filename}' ready to download.")
 
-        print("\n---Scoring process completed ---")
-
-         # NEW CODE BLOCK FOR VISUALIZATION STARTS HERE
         print("\n--- VISUALIZING AMBASSADOR TOTAL SCORES ---")
 
         # Dynamically adjust figure height based on number of ambassadors
@@ -253,7 +250,13 @@ else:
         ax.grid(axis='x', linestyle='--', alpha=0.7)
 
         plt.tight_layout() # Adjust layout to prevent labels from overlapping
-        plt.show() # Display the plot
+
+        # Option to download the plot as a PNG image
+        # chart_filename = 'ambassador_scores_chart.png'
+        # plt.savefig(chart_filename, bbox_inches='tight', dpi=300) # Save with tight bounding box and 300 DPI
+        # files.download(chart_filename) # Trigger download in Colab
+        # print(f"\nChart '{chart_filename}' ready to download.")
+
+        plt.show() # Display the plot after saving
 
         print("\n--- Visualization completed ---")
-        # NEW CODE BLOCK FOR VISUALIZATION ENDS HERE

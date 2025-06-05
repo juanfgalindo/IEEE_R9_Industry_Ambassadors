@@ -5,7 +5,7 @@ This program helps you calculate scores for ambassadors based on their reported 
 How it Works
 The script reads data from a Google Sheet (either by uploading a CSV/Excel file or directly from a public Google Sheet URL), processes the entries, and calculates points for various activities such as recruiting new members, forming local groups, holding meetings, and promoting events. Crucially, only validated entries are included in the scoring.
 
-The final output is a table showing each ambassador's score broken down by activity type, along with their total score, sorted from highest to lowest. Additionally, the program now generates a horizontal bar chart visualizing the total points for each ambassador, providing a quick and intuitive overview of the standings.
+The final output is a table showing each ambassador's score broken down by activity type, along with their total score, sorted from highest to lowest. Additionally, the program now generates a horizontal bar chart visualizing the total points for each ambassador, providing a quick and intuitive overview of the standings. This chart can also be downloaded as a PNG image.
 
 Setup and Usage
 Follow these steps to get your ambassador scores:
@@ -23,7 +23,7 @@ Go to File > Share > Publish to web.
 Select the specific sheet (tab) you want to use.
 Choose Comma-separated values (.csv) as the format.
 Click Publish and copy the generated URL. This is the public_sheet_url you'll use in the code.
-Alternatively, you can get a shareable link and construct the CSV export URL manually. For a sheet link like https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit?usp=sharing, the CSV export link would be https://docs.google.com/sheets/d/YOUR_SHEET_ID/export?format=csv&gid=YOUR_GID. (The gid is usually 0 for the first tab, or found in the URL when you select a specific tab: &gid=xxxxxx).
+Alternatively, you can get a shareable link and construct the CSV export URL manually. For a sheet link like https://docs.google.com/sheets/d/YOUR_SHEET_ID/edit?usp=sharing, the CSV export link would be https://docs.google.com/sheets/d/YOUR_SHEET_ID/export?format=csv&gid=YOUR_GID. (The gid is usually 0 for the first tab, or found in the URL when you select a specific tab: &gid=xxxxxx).
 Open in Google Colab
 
 Go to Google Colab.
@@ -52,6 +52,10 @@ Download Results (Optional)
 If you wish to download the results as a CSV file, locate the --- Download results as CSV --- section at the end of the code.
 Uncomment the lines within this block.
 Run the cell again. A file named ambassadors_scores.csv will be downloaded to your computer.
+To download the horizontal bar chart as a PNG image:
+Locate the --- NEW: Option to download the plot as a PNG image --- section at the end of the code.
+Uncomment the lines within this block.
+Run the cell again. A file named ambassador_scores_chart.png will be downloaded to your computer.
 Understanding the Horizontal Bar Chart
 After the score table, the program generates a horizontal bar chart titled "Ambassador Total Score Standings."
 
@@ -71,3 +75,4 @@ Chart Not Appearing or Looking Odd:
 Ensure import matplotlib.pyplot as plt is at the top of your script.
 Verify that scores_df is not empty and contains valid Total_Score values.
 If labels overlap, the dynamic sizing should generally prevent this, but for an extremely large number of ambassadors, manual adjustment of fig_height might be considered.
+Downloaded PNG image is empty: This usually occurs if plt.show() is called before plt.savefig(). The current code is structured to save the image before displaying it, which should prevent this. Ensure you are running the latest version of the code provided.
